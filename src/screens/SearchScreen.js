@@ -2,31 +2,31 @@ import React, { useState } from 'react';
 import { View, Text, StyleSheet } from 'react-native';
 import { SearchBar } from 'react-native-elements';
 
+// Hooks
+import useResults from '../hooks/useResults';
+
 const SearchScreen = () => {
-    const [query, setQuery] = useState("")
+    const [ query, setQuery ] = useState("");
+    const [ searchAPI, results, errorMessage ] = useResults();
 
     return (
-        <View style={styles.backgroundStyle}>
+        <View>
             <SearchBar
                 placeholder="Search"
                 platform="ios"
                 onChangeText={newValue => setQuery(newValue)}
+                onEndEditing={() => searchAPI(query)}
                 value={query}
             />
-            <Text>
-                Search Screen
-            </Text>
-            <Text>
-                {query}
-            </Text>
+            {errorMessage 
+                ?   <Text>{errorMessage}</Text> 
+                :   null
+            }
+            <Text>We have found {results.length} results</Text>
         </View>
     );
 };
 
-const styles = StyleSheet.create({
-    backgroundStyle: {
-        backgroundColor: '#ffffff'
-    }
-});
+const styles = StyleSheet.create({});
 
 export default SearchScreen;

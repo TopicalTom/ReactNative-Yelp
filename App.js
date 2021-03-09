@@ -6,6 +6,7 @@ import { createStackNavigator } from '@react-navigation/stack';
 
 // Screens
 import SearchScreen from './src/screens/SearchScreen';
+import ResultScreen from './src/screens/ResultScreen';
 
 const Stack = createStackNavigator();
 
@@ -18,6 +19,11 @@ const App = () => {
                         name="Search" 
                         component={SearchScreen} 
                         options={{ title: 'Business Search' }}
+                    />
+                    <Stack.Screen 
+                        name="Result" 
+                        component={ResultScreen} 
+                        options={{ title: 'Result' }}
                     />
                 </Stack.Navigator>
             </NavigationContainer>

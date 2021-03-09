@@ -1,16 +1,25 @@
 import React, { useState } from 'react';
-import { View, Text, StyleSheet } from 'react-native';
+import { View, Text, StyleSheet, ScrollView } from 'react-native';
 import { SearchBar } from 'react-native-elements';
 
 // Hooks
 import useResults from '../hooks/useResults';
 
+// Components
+import ResultsList from '../components/ResultsList';
+
 const SearchScreen = () => {
     const [ query, setQuery ] = useState("");
     const [ searchAPI, results, errorMessage ] = useResults();
 
+    const filterResultsByPrice = (price) => {
+        return results.filter(results => {
+            return results.price === price;
+        });
+    };
+
     return (
-        <View>
+        <>
             <SearchBar
                 placeholder="Search"
                 platform="ios"
@@ -22,11 +31,29 @@ const SearchScreen = () => {
                 ?   <Text>{errorMessage}</Text> 
                 :   null
             }
-            <Text>We have found {results.length} results</Text>
-        </View>
+            <ScrollView style={styles.scrollArea}>
+                <ResultsList 
+                    title="Cost Effective" 
+                    results={filterResultsByPrice('$')}
+                />
+                <ResultsList 
+                    title="Bit Pricier"
+                    results={filterResultsByPrice('$$')} 
+                />
+                <ResultsList 
+                    title="Big Spender" 
+                    results={filterResultsByPrice('$$$')}
+                /> 
+            </ScrollView>
+        </>
     );
 };
 
-const styles = StyleSheet.create({});
+const styles = StyleSheet.create({
+    scrollArea: {
+        backgroundColor: '#fff',
+        flex: 1
+    }
+});
 
 export default SearchScreen;

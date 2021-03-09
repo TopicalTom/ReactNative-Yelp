@@ -6,20 +6,27 @@ const SearchScreen = () => {
     const [query, setQuery] = useState("")
 
     return (
-        <View>
+        <View style={styles.backgroundStyle}>
             <SearchBar
                 placeholder="Search"
                 platform="ios"
-                onChangeText={(newValue) => setQuery(newValue)}
+                onChangeText={newValue => setQuery(newValue)}
                 value={query}
             />
             <Text>
                 Search Screen
             </Text>
+            <Text>
+                {query}
+            </Text>
         </View>
     );
 };
 
-const styles = StyleSheet.create({});
+const styles = StyleSheet.create({
+    backgroundStyle: {
+        backgroundColor: '#ffffff'
+    }
+});
 
 export default SearchScreen;
